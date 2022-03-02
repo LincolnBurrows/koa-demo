@@ -23,11 +23,17 @@ app
   .use(router.allowedMethods());
 
 //
-router.get('/', async (ctx) => {
+router.get('/', async (ctx, next) => {
         console.log(new Date())
         await ctx.render('shouye',{title: 'hello dydxacfun'})
   })
 
+
+router.get('/news', async(ctx, next)=>{
+    console.log(new Date())
+    let arr = ['1', '2','3','4']
+    await ctx.render('news',{arr: arr})
+})  
 
 app.listen(3000)
 console.log('server running on port 3000')
