@@ -1,12 +1,27 @@
 const Koa = require('koa')
-
+const Router = require('koa-router')
 const app = new Koa()
-env = app.env
-keys = app.keys
-proxy = app.proxy
+const router = new Router()
+
+env = app.env    // 默认是 NODE_ENV 或 "development"
+keys = app.keys  // 签名的 cookie 密钥数组
+proxy = app.proxy // 当真正的代理头字段将被信任时
 console.log('app.env' ,`${env}`)
 console.log('app.keys', `${keys}`)
 console.log('app.proxy', `${proxy}`)
+app.proxy = true //const app = new Koa({proxy: true})
+
+// koa router
+app
+  .use(router.routes())
+  .use(router.allowedMethods());
+
+
+router.get('/', (ctx,next) => {
+        next()
+        ctx.body = 'hello zhangsan'
+  })
+
 
 //logger
 app.use(async (ctx, next)=>{
@@ -30,7 +45,7 @@ app.use(async (ctx, next)=>{
 //response
 app.use(async ctx =>{
     console.log(3)
-    ctx.body = 'hello world'
+    console.log(ctx.request.method)
 })
 
 app.listen(3000)
