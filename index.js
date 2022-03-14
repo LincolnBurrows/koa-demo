@@ -44,8 +44,11 @@ router.all('/', async (ctx, next) => {
         console.log(new Date())
         await ctx.render('shouye',{title: 'hello dydxacfun'})
     }else if(ctx.request.method == 'POST'){
+        console.log(ctx.request.method)
+        console.log(new Date())
         console.log(ctx.request.body.fname)
-        ctx.body = 'post shouye';
+        console.log(ctx.request.body.lname)
+        ctx.redirect('/news')
     }
 })
 
