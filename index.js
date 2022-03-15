@@ -3,6 +3,7 @@ const Router = require('koa-router')
 const views = require('koa-views');
 const serve = require('koa-static');
 const bodyParser = require('koa-bodyparser');
+const {host, port} = require('./utils')
 
 const app = new Koa()
 const router = new Router()
@@ -58,5 +59,7 @@ router.get('/news', async(ctx, next)=>{
     await ctx.render('news',{arr: arr})
 })  
 
-app.listen(3000)
-console.log('server running on port 3000')
+app.listen(port,()=>{
+    console.log(`server running on at ${host}:${port}`)
+})
+
